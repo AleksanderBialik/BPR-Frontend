@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: DEploy  to AWS
+name: Deploy  to AWS
 
 # Controls when the workflow will run
 on:
