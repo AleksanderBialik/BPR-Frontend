@@ -1,9 +1,16 @@
 <template>
-  <div>THIS IS HOME PAGE</div>
+  <div>
+    <RandomChart />
+  </div>
 </template>
 
 <script>
-export default {};
+import RandomChart from "../components/charts/RandomChart.vue";
+export default {
+  components: {
+    RandomChart,
+  },
+};
 </script>
 
 <style></style>

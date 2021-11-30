@@ -1,7 +1,6 @@
 import axios from "axios";
 
-export const URL =
-  "https://virtserver.swaggerhub.com/k0k0piotrowski/StockX/1.0.0/";
+export const URL = "http://ec2-3-8-48-95.eu-west-2.compute.amazonaws.com:3000";
 
 const instance = axios.create({
   baseURL: URL,

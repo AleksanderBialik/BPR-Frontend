@@ -9,10 +9,20 @@ const snackbar = {
   }),
 
   mutations: {
-    setSnackbar(state, payload) {
-      state.icon = payload.icon;
-      state.color = payload.color;
-      state.message = payload.message;
+    setSuccessSnackbar(state, message) {
+      state.color = "success";
+      state.icon = "check";
+      state.message = message;
+    },
+    setErrorSnackbar(state, message) {
+      state.color = "error";
+      state.icon = "exclamation-triangle";
+      state.message = message;
+    },
+    setWarningSnackbar(state, message) {
+      state.icon = "exclamation-triangle";
+      state.color = "warning";
+      state.message = message;
     },
     toggleSnackbar(state, payload) {
       state.show = payload;
@@ -20,8 +30,17 @@ const snackbar = {
   },
 
   actions: {
-    setSnackbar({ commit }, snackbar) {
-      commit("setSnackbar", snackbar);
+    setSuccessSnackbar({ commit }, message) {
+      commit("setSuccessSnackbar", message);
+      commit("toggleSnackbar", true);
+    },
+    setErrorSnackbar({ commit }, message) {
+      commit("setErrorSnackbar", message);
+      commit("toggleSnackbar", true);
+    },
+    setWarningSnackbar({ commit }, message) {
+      commit("setWarningSnackbar", message);
+      commit("toggleSnackbar", true);
     },
     toggleSnackbar({ commit }, value) {
       commit("toggleSnackbar", value);

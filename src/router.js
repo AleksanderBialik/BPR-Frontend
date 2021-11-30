@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ErrorPage from "./pages/ErrorPage";
+import EntryPage from "./pages/EntryPage";
+import AccountCreatedPage from "./pages/AccountCreatedPage";
 import jwt_decode from "jwt-decode";
 import store from "./store";
 // import moment from "moment";
@@ -16,12 +18,12 @@ let router = new Router({
   routes: [
     {
       path: "/",
-      redirect: { name: "login" },
+      redirect: { name: "entry" },
     },
     {
-      path: "/home",
-      name: "home",
-      component: HomePage,
+      path: "/entry",
+      name: "entry",
+      component: EntryPage,
     },
     {
       path: "/login",
@@ -33,6 +35,17 @@ let router = new Router({
       name: "register",
       component: RegisterPage,
     },
+    {
+      path: "/accountCreated",
+      name: "accountCreated",
+      component: AccountCreatedPage,
+    },
+    {
+      path: "/home",
+      name: "home",
+      component: HomePage,
+    },
+
     // {
     //   path: "/favourites",
     //   name: "favourites",
@@ -43,6 +56,7 @@ let router = new Router({
     // },
     {
       path: "*",
+      name: "error",
       component: ErrorPage,
     },
   ],
@@ -53,7 +67,7 @@ router.beforeEach(async (to, from, next) => {
     try {
       jwt_decode(window.localStorage.getItem("token"));
     } catch (err) {
-      router.push({ name: "login" });
+      router.push({ name: "home" });
       store.dispatch(
         "snackbar/setSnackbar",
         {

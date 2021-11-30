@@ -3,6 +3,7 @@ import Vuetify from "vuetify/lib";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import {
   faTwitter,
   faTelegram,
@@ -12,9 +13,6 @@ import {
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 // to use brand icons  :icon="['fab', 'facebook']"
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import pl from "vuetify/lib/locale/pl";
-
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 library.add(
   fas,
@@ -25,17 +23,39 @@ library.add(
   faGithub,
   faTelegram
 );
-Vue.use(Vuetify, { iconfont: "faSvg" });
+Vue.use(Vuetify);
 
 export default new Vuetify({
-  theme: { dark: true },
+  theme: { dark: false },
   icons: {
-    // iconfont: 'faSvg', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
     checked: "fas fa-check-square",
     unchecked: "far fa-square",
-  },
-  lang: {
-    locales: { pl },
-    current: "pl",
+    iconfont: "faSvg",
+    values: {
+      house: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "home",
+        },
+      },
+      search: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "search",
+        },
+      },
+      user: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: ["fa", "user"],
+        },
+      },
+      cart: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "shopping-cart",
+        },
+      },
+    },
   },
 });

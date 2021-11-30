@@ -15,6 +15,16 @@ extend("required", {
   message: "This field can't be empty!",
 });
 
+extend("username", {
+  ...required,
+  message: "Username can't be empty!",
+});
+
+extend("pass", {
+  ...required,
+  message: "Password can't be empty!",
+});
+
 extend("max", {
   ...max,
   message: "This field can containy only {length} characters!",
