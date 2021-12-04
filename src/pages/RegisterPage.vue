@@ -94,9 +94,8 @@ export default {
         username: this.username,
         password: this.password,
       };
-
-      await this.$store.dispatch("authentication/register", credentials);
       this.$refs.logObs.reset();
+      await this.$store.dispatch("authentication/register", credentials);
     },
   },
 };

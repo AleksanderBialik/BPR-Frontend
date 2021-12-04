@@ -6,6 +6,8 @@ import RegisterPage from "./pages/RegisterPage";
 import ErrorPage from "./pages/ErrorPage";
 import EntryPage from "./pages/EntryPage";
 import AccountCreatedPage from "./pages/AccountCreatedPage";
+import PortfolioPage from "./pages/PortfolioPage";
+import StocksPage from "./pages/StocksPage";
 import jwt_decode from "jwt-decode";
 import store from "./store";
 // import moment from "moment";
@@ -44,6 +46,16 @@ let router = new Router({
       path: "/home",
       name: "home",
       component: HomePage,
+    },
+    {
+      path: "/portfolio",
+      name: "portfolio",
+      component: PortfolioPage,
+    },
+    {
+      path: "/stocks",
+      name: "stocks",
+      component: StocksPage,
     },
 
     // {

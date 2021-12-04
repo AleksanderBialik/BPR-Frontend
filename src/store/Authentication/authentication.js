@@ -25,8 +25,8 @@ const authentication = {
         const response = await axios.post(
           "auth/login",
           {
+            email: object.email,
             password: object.password,
-            username: object.username,
           },
           {
             headers: {

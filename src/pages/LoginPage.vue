@@ -20,7 +20,7 @@
               type="text"
               placeholder="Username"
               rules="username"
-              v-model="username"
+              v-model="email"
               outlined
               dense
             />
@@ -65,18 +65,17 @@ export default {
     ValidationObserver,
   },
   data: () => ({
-    username: "",
+    email: "",
     password: "",
   }),
   methods: {
     async onLogin() {
       let credentials = {
-        username: this.username,
+        email: this.email,
         password: this.password,
       };
-
-      await this.$store.dispatch("authentication/login", credentials);
       this.$refs.logObs.reset();
+      await this.$store.dispatch("authentication/login", credentials);
     },
   },
 };
