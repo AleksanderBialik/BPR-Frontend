@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const URL = "http://ec2-3-8-48-95.eu-west-2.compute.amazonaws.com:80";
+export const URL = "https://ec2-3-8-48-95.eu-west-2.compute.amazonaws.com:80";
 
 const instance = axios.create({
   baseURL: URL,
