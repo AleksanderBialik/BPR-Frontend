@@ -4,7 +4,7 @@ import store from "./store";
 export const URL =
   process.env.NODE_ENV === "development"
     ? "http://stockx-lb-1734521826.eu-west-2.elb.amazonaws.com:3000"
-    : "https://stockx-lb-1734521826.eu-west-2.elb.amazonaws.com";
+    : "http://stockx-lb-1734521826.eu-west-2.elb.amazonaws.com:3000";
 
 const instance = axios.create({
   baseURL: URL,
