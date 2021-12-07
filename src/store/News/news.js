@@ -6,7 +6,7 @@ const news = {
   namespaced: true,
 
   state: () => ({
-    news: {},
+    news: [],
   }),
 
   mutations: {
@@ -18,11 +18,7 @@ const news = {
   actions: {
     async fetchNews({ commit, dispatch }) {
       try {
-        const response = await axios.get("news", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.get("news");
         commit("SET_NEWS", response.data);
       } catch (error) {
         dispatch("snackbar/setErrorSnackbar", "Couldn't retrieve the news!", {

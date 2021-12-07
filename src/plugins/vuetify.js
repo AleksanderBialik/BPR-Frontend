@@ -47,13 +47,31 @@ export default new Vuetify({
       user: {
         component: FontAwesomeIcon,
         props: {
-          icon: ["fa", "user"],
+          icon: "user",
         },
       },
       cart: {
         component: FontAwesomeIcon,
         props: {
           icon: "shopping-cart",
+        },
+      },
+      gear: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "cog",
+        },
+      },
+      logout: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "sign-out-alt",
+        },
+      },
+      times: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "times",
         },
       },
     },

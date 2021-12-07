@@ -8,8 +8,10 @@ import EntryPage from "./pages/EntryPage";
 import AccountCreatedPage from "./pages/AccountCreatedPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import StocksPage from "./pages/StocksPage";
+import StockPage from "./pages/StockPage";
 import jwt_decode from "jwt-decode";
 import store from "./store";
+// import store from "./store";
 // import moment from "moment";
 // import axios from "./axios"
 
@@ -46,26 +48,31 @@ let router = new Router({
       path: "/home",
       name: "home",
       component: HomePage,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/portfolio",
       name: "portfolio",
       component: PortfolioPage,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/stocks",
       name: "stocks",
       component: StocksPage,
+      meta: {
+        requiresAuth: true,
+      },
     },
-
-    // {
-    //   path: "/favourites",
-    //   name: "favourites",
-    //   component: FavouritesPage,
-    //   meta: {
-    //     requiresAuth: true,
-    //   },
-    // },
+    {
+      path: "/stock/:stockSymbol",
+      name: "stock",
+      component: StockPage,
+    },
     {
       path: "*",
       name: "error",
@@ -79,17 +86,7 @@ router.beforeEach(async (to, from, next) => {
     try {
       jwt_decode(window.localStorage.getItem("token"));
     } catch (err) {
-      router.push({ name: "home" });
-      store.dispatch(
-        "snackbar/setSnackbar",
-        {
-          color: "red",
-          icon: "exclamation-triangle",
-          message: "Log in to see your favourites list",
-        },
-        { root: true }
-      );
-      store.dispatch("snackbar/toggleSnackbar", true, { root: true });
+      store.dispatch("authentication/logout");
     }
   } else {
     next();

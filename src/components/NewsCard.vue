@@ -3,50 +3,53 @@
     <v-hover>
       <template v-slot:default="{ hover }">
         <v-card
+          style="border-radius: 25px !important"
           height="100%"
-          :elevation="hover ? 24 : 5"
+          :class="{ shadow: true, shadowIn: hover }"
           tile
           :href="href"
           target="_blank"
         >
-          <v-img
-            v-if="!src.includes('staging.forexlive.com')"
-            v-ripple
-            :height="
-              $vuetify.breakpoint.name != 'xs' &&
-              $vuetify.breakpoint.name != 'sm'
-                ? '25vh'
-                : ''
-            "
-            class="black--text align-end"
-            :aspect-ratio="
-              $vuetify.breakpoint.name === 'xs' ||
-              $vuetify.breakpoint.name === 'sm'
-                ? '1'
-                : ''
-            "
-            :src="src"
-          >
-          </v-img>
-          <v-img
-            v-else
-            v-ripple
-            :height="
-              $vuetify.breakpoint.name != 'xs' &&
-              $vuetify.breakpoint.name != 'sm'
-                ? '25vh'
-                : ''
-            "
-            class="black--text align-end"
-            :aspect-ratio="
-              $vuetify.breakpoint.name === 'xs' ||
-              $vuetify.breakpoint.name === 'sm'
-                ? '1'
-                : ''
-            "
-            src="../assets/stockX.png"
-          >
-          </v-img>
+          <div style="overflow: hidden">
+            <v-img
+              v-if="!src.includes('staging.forexlive.com')"
+              v-ripple
+              :height="
+                $vuetify.breakpoint.name != 'xs' &&
+                $vuetify.breakpoint.name != 'sm'
+                  ? '25vh'
+                  : ''
+              "
+              :class="{ zoom: hover, zoomOut: !hover }"
+              :aspect-ratio="
+                $vuetify.breakpoint.name === 'xs' ||
+                $vuetify.breakpoint.name === 'sm'
+                  ? '1'
+                  : ''
+              "
+              :src="src"
+            >
+            </v-img>
+            <v-img
+              v-else
+              v-ripple
+              :height="
+                $vuetify.breakpoint.name != 'xs' &&
+                $vuetify.breakpoint.name != 'sm'
+                  ? '25vh'
+                  : ''
+              "
+              :class="{ zoom: hover, zoomOut: !hover }"
+              :aspect-ratio="
+                $vuetify.breakpoint.name === 'xs' ||
+                $vuetify.breakpoint.name === 'sm'
+                  ? '1'
+                  : ''
+              "
+              src="../assets/news.png"
+            >
+            </v-img>
+          </div>
           <v-card-title>
             <span class="break">{{ title }}</span></v-card-title
           >
@@ -57,8 +60,13 @@
           <v-card-text
             ><span style="position: absolute; bottom: 0"
               >Source:{{ source }}</span
-            ></v-card-text
-          >
+            >
+            <span
+              class="mr-4"
+              style="position: absolute; bottom: 0; right: 0"
+              >{{ getDate() }}</span
+            >
+          </v-card-text>
         </v-card>
       </template>
     </v-hover>
@@ -67,6 +75,11 @@
 
 <script>
 export default {
+  methods: {
+    getDate() {
+      return new Date(this.date * 1000).toLocaleDateString();
+    },
+  },
   props: {
     text: {
       type: String,
@@ -88,8 +101,11 @@ export default {
       type: String,
       default: "",
     },
+    date: {
+      type: String,
+      default: "",
+    },
   },
-  methods: {},
 };
 </script>
 
@@ -128,5 +144,23 @@ export default {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+.zoom {
+  transition: transform 0.5s; /* Animation */
+  transform: scale(1.5);
+}
+.zoomOut {
+  transition: transform 0.5s; /* Animation */
+  transform: scale(1);
+}
+.shadow {
+  transition: box-shadow 0.5s ease-in-out;
+  -webkit-box-shadow: 12px 11px 25px -9px #000000 !important;
+  box-shadow: 12px 11px 25px -9px #000000 !important;
+}
+.shadowIn {
+  transition: box-shadow 0.5s ease-in-out;
+  -webkit-box-shadow: 14px 15px 25px -1px #000000 !important;
+  box-shadow: 14px 15px 25px -1px #000000 !important;
 }
 </style>

@@ -1,19 +1,30 @@
 <template>
-  <v-row align-content="stretch">
+  <v-row
+    :class="{ position: news.length === 0 }"
+    style="max-width: 1400px; margin: auto"
+    align-content="stretch"
+  >
+    <v-col class="text-center" v-show="news.length != 0"
+      ><h1 style="font-size: 100px' ;font-style: italic;">Stock News</h1></v-col
+    >
+    <v-col v-show="news.length != 0" cols="12"
+      ><v-pagination length="12" color="green" v-model="page"></v-pagination
+    ></v-col>
     <v-col
+      v-show="news.length != 0"
       cols="6"
       sm="6"
       md="4"
       lg="4"
-      xl="3"
+      xl="4"
       :class="{
         'column-margin':
-          index + 1 == news.length &&
+          index + 1 == getSlicedNews().length &&
           ($vuetify.breakpoint.name === 'xs' ||
             $vuetify.breakpoint.name === 'sm') &&
-          news.length % 2 != 0,
+          getSlicedNews().length % 2 != 0,
       }"
-      v-for="(item, index) in news"
+      v-for="(item, index) in getSlicedNews()"
       :key="index"
     >
       <NewsCard
@@ -22,16 +33,23 @@
         :text="item.summary"
         :href="item.url"
         :source="item.source"
+        :date="item.datetime"
       />
     </v-col>
-  </v-row>
+
+    <v-col v-show="news.length != 0" cols="12"
+      ><v-pagination color="green" length="12" v-model="page"></v-pagination
+    ></v-col>
+    <ProgressCircle :array="news"
+  /></v-row>
 </template>
 
 <script>
+import ProgressCircle from "../components/ProgressCircle.vue";
 import NewsCard from "../components/NewsCard.vue";
 export default {
   name: "HomePage",
-  components: { NewsCard },
+  components: { NewsCard, ProgressCircle },
   created() {
     this.$store.dispatch("news/fetchNews");
   },
@@ -40,7 +58,23 @@ export default {
       return this.$store.getters["news/getNews"];
     },
   },
+  data: () => ({
+    page: 1,
+  }),
+  watch: {
+    page() {
+      this.goUp();
+    },
+  },
+  methods: {
+    goUp() {
+      window.scrollTo(0, 0);
+    },
+    getSlicedNews() {
+      return this.news.slice(this.page * 9 - 9, this.page * 9);
+    },
+  },
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

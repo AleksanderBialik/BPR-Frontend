@@ -3,9 +3,10 @@ import Vuex from "vuex";
 import snackbar from "./store/Snackbar/snackbar";
 import authentication from "./store/Authentication/authentication";
 import news from "./store/News/news";
+import stocks from "./store/Stocks/stocks";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: { snackbar, authentication, news },
+  modules: { snackbar, authentication, news, stocks },
 });
