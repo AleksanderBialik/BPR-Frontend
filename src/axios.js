@@ -2,9 +2,10 @@ import axios from "axios";
 import store from "./store";
 
 export const URL =
-  process.env.NODE_ENV === "development"
-    ? "http://stockx-lb-1734521826.eu-west-2.elb.amazonaws.com:3000"
-    : "http://stockx-lb-1734521826.eu-west-2.elb.amazonaws.com:3000";
+  "http://stockx-lb-1734521826.eu-west-2.elb.amazonaws.com:3000";
+
+export const WS =
+  "ws://stockx-lb-1734521826.eu-west-2.elb.amazonaws.com:3000/ws";
 
 const instance = axios.create({
   baseURL: URL,

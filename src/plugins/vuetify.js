@@ -74,6 +74,12 @@ export default new Vuetify({
           icon: "times",
         },
       },
+      eye: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "eye",
+        },
+      },
     },
   },
 });

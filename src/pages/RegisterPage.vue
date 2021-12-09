@@ -19,7 +19,7 @@
             <VTextFieldWithValidation
               type="text"
               placeholder="Email"
-              rules="required|email"
+              rules="emailRequired|email"
               v-model="email"
               outlined
               dense
@@ -27,7 +27,7 @@
             <VTextFieldWithValidation
               type="text"
               placeholder="Username"
-              rules="required"
+              rules="username|usernameRegex"
               v-model="username"
               outlined
               dense
@@ -36,7 +36,7 @@
               placeholder="Password"
               type="password"
               vid="password"
-              rules="required|min:8"
+              rules="pass|minPassword:8"
               v-model="password"
               outlined
               dense
@@ -46,7 +46,7 @@
               placeholder="Confirm password"
               type="password"
               v-model="confirmPassword"
-              rules="required|password:@password"
+              rules="pass|password:@password"
               outlined
               dense
             />

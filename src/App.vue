@@ -1,15 +1,5 @@
 <template>
   <v-app>
-    <!-- <v-navigation-drawer
-      v-if="!fillHeight.includes($route.name)"
-      fixed
-      clipped
-      color="green"
-      v-model="drawer"
-      right
-      mobile-breakpoint="0"
-      :width="$vuetify.breakpoint.name === 'xs' ? '101vw' : '280'"
-    ></v-navigation-drawer> -->
     <v-app-bar
       color="#00264d"
       app
@@ -64,7 +54,6 @@
             v-bind="attrs"
             v-on="on"
             style="color: black"
-            @click.stop="drawer = !drawer"
           >
             <v-icon v-if="menu" class="icon">$times</v-icon></v-app-bar-nav-icon
           >
@@ -72,7 +61,7 @@
 
         <v-list>
           <v-list-item-group>
-            <v-list-item class="pl-3">
+            <v-list-item :to="{ path: `/settings` }" class="pl-3">
               <v-icon medium class="pr-2">$gear</v-icon>
               <v-list-item-content>
                 <v-list-item-title
@@ -117,15 +106,37 @@
       class="pl-0 pr-0"
       v-if="!fillHeight.includes(route)"
     >
-      <DynamicMarquee class="mt-2" direction="row" reverse :hoverPause="true">
+      <DynamicMarquee
+        v-if="wsData"
+        class="mt-1"
+        direction="row"
+        reverse
+        :hoverPause="true"
+      >
         <div class="d-flex justify-center">
-          <span
-            v-for="(item, index) in items"
+          <div
+            v-for="(data, index) in wsData"
             :key="index"
-            style="color: white; margin-right: 100px"
+            style="margin-right: 100px"
           >
-            {{ item }}</span
-          >
+            <v-chip
+              :color="getChipColor(data.r)"
+              :text-color="getChipTextColor(data.r)"
+              style="width: 200px; cursor: pointer"
+              class="justify-center"
+              :to="{ path: `/stock/${data.s}` }"
+            >
+              <span style="font-size: 17px" class="mr-2 font-weight-bold">
+                {{ data.s }}
+              </span>
+              <span style="font-size: 14px" class="mr-1">{{
+                data.c.toFixed(2)
+              }}</span>
+              <span style="font-size: 13px d-flex justify-center"
+                >({{ data.p.toFixed(2) }}%)</span
+              >
+            </v-chip>
+          </div>
         </div>
       </DynamicMarquee>
     </v-footer>
@@ -135,29 +146,23 @@
 <script>
 import Snackbar from "./components/Snackbar.vue";
 import DynamicMarquee from "vue-dynamic-marquee";
+import { WS } from "./axios";
 export default {
   name: "App",
   components: { Snackbar, DynamicMarquee },
 
-  created() {},
+  created() {
+    if (!this.noWs.includes(this.$route.name)) {
+      this.startWs();
+    }
+  },
   watch: {
     $route() {
       console.log(this.$route.name);
       if (this.noWs.includes(this.$route.name)) {
-        this.connection.close();
-        this.connection = null;
+        this.closeWs();
       } else if (!this.connection) {
-        this.connection = new WebSocket(
-          "ws://ec2-3-8-48-95.eu-west-2.compute.amazonaws.com:3000/ws"
-        );
-        this.connection.onmessage = (event) => {
-          const data = JSON.parse(event.data);
-          console.log(data);
-          this.wsData = data;
-        };
-        this.connection.onopen = function (event) {
-          console.log(event);
-        };
+        this.startWs();
       }
     },
   },
@@ -171,23 +176,7 @@ export default {
     buttonColor: "white",
     connection: null,
     menu: "",
-    wsData: {},
-    items: [
-      "a",
-      "2",
-      "3",
-      "4",
-      "1",
-      "2",
-      "b",
-      "a",
-      "2",
-      "3",
-      "4",
-      "1",
-      "2",
-      "b",
-    ],
+    wsData: null,
   }),
   computed: {
     route() {
@@ -202,7 +191,20 @@ export default {
   },
   methods: {
     logout() {
+      this.menu = false;
       this.$store.dispatch("authentication/logout");
+    },
+    startWs() {
+      this.connection = new WebSocket(WS);
+      console.log("CONNECTED");
+      this.connection.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        this.wsData = data;
+      };
+    },
+    closeWs() {
+      this.connection.close();
+      this.connection = null;
     },
     getStockPageInfo() {
       if (this.stockCandles.length === 0 && this.$route.name === "stock") {
@@ -213,6 +215,22 @@ export default {
       if (this.news.length === 0 && this.$route.name === "home") {
         return true;
       } else false;
+    },
+    getChipColor(item) {
+      if (item === -1) {
+        return "#FF0000";
+      } else if (item === 0) {
+        return "white";
+      } else {
+        return "#02a119";
+      }
+    },
+    getChipTextColor(item) {
+      if (item === -1 || item === 1) {
+        return "white";
+      } else {
+        return "black";
+      }
     },
   },
 };
@@ -259,9 +277,9 @@ html {
   flex-direction: column;
 }
 .icon {
-  transition-duration: 1s;
+  transition-duration: 0.5s;
   transition-property: transform;
-  transform: rotate(360deg);
-  -webkit-transform: rotate(360deg);
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
 }
 </style>

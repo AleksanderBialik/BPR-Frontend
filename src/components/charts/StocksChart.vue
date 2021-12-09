@@ -1,10 +1,26 @@
 <template>
-  <trading-vue
-    style="margin: auto"
-    :title-txt="name"
-    :data="chart"
-    ref="tradingVue"
-  ></trading-vue>
+  <div>
+    <v-btn
+      class="ml-2 mt-2"
+      fab
+      icon
+      absolute
+      :color="buttonColor"
+      small
+      style="z-index: 99999"
+      @click="change()"
+    >
+      <v-icon>$eye</v-icon></v-btn
+    >
+    <trading-vue
+      :width="width - 24"
+      style="margin-left: auto; margin-right: auto"
+      :title-txt="name"
+      :data="chart"
+      ref="tradingVue"
+      :toolbar="true"
+    ></trading-vue>
+  </div>
 </template>
 <script>
 import TradingVue from "trading-vue-js";
@@ -12,12 +28,11 @@ import TradingVue from "trading-vue-js";
 export default {
   name: "StocksChart",
   components: { TradingVue },
-  props: ["values", "name", "type"],
+  props: ["values", "name", "type", "width"],
 
   watch: {
     values() {
-      this.chart.chart.data = this.values;
-      this.$refs.tradingVue.resetChart();
+      this.resetChart();
     },
     type() {
       this.change();
@@ -25,20 +40,35 @@ export default {
   },
   methods: {
     change() {
-      this.chart.chart.type = this.type;
+      if (this.chart.chart.type === "Candles") {
+        this.chart.chart.type = "Spline";
+        this.buttonColor = "green";
+      } else {
+        this.chart.chart.type = "Candles";
+        this.buttonColor = "red";
+      }
+    },
+    resetChart() {
+      this.chart.chart.data = this.values;
+      this.$refs.tradingVue.resetChart();
     },
   },
   data() {
     return {
       chart: {
         chart: {
-          type: "Spline",
+          type: "Candles",
           data: [],
         },
       },
+      buttonColor: "red",
     };
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+::v-deep .trading-vue-toolbar {
+  z-index: 1 !important;
+}
+</style>

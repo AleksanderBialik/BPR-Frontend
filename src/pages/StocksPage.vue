@@ -29,6 +29,9 @@
         :headers="stocksHeaders"
         :items="stocks"
         :search="stockSearch"
+        :footer-props="{
+          'items-per-page-options': [10, 20, 30, 40, 50],
+        }"
       ></v-data-table>
     </v-col>
   </v-row>

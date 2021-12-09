@@ -102,8 +102,8 @@ export default {
       default: "",
     },
     date: {
-      type: String,
-      default: "",
+      type: Number,
+      default: 0,
     },
   },
 };

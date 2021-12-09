@@ -8,7 +8,7 @@ const stocks = {
   state: () => ({
     stocks: [],
     stockCandles: [],
-    stock: {},
+    stock: null,
   }),
 
   mutations: {
@@ -36,10 +36,8 @@ const stocks = {
     },
     async fetchStock({ commit, dispatch }, object) {
       try {
-        const response = await axios.get(
-          `stock/company/info?symbol=${object}`,
-          {}
-        );
+        const response = await axios.get(`stock/company/info?symbol=${object}`);
+        console.log(response.data);
         commit("SET_STOCK", response.data);
       } catch (error) {
         dispatch(

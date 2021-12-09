@@ -8,7 +8,12 @@
       ><h1 style="font-size: 100px' ;font-style: italic;">Stock News</h1></v-col
     >
     <v-col v-show="news.length != 0" cols="12"
-      ><v-pagination length="12" color="green" v-model="page"></v-pagination
+      ><v-pagination
+        circle
+        :length="news.length % 9 > 0 ? news.length / 9 + 1 : news.length / 9"
+        color="green"
+        v-model="page"
+      ></v-pagination
     ></v-col>
     <v-col
       v-show="news.length != 0"
@@ -38,7 +43,12 @@
     </v-col>
 
     <v-col v-show="news.length != 0" cols="12"
-      ><v-pagination color="green" length="12" v-model="page"></v-pagination
+      ><v-pagination
+        circle
+        color="green"
+        :length="news.length % 9 > 0 ? news.length / 9 + 1 : news.length / 9"
+        v-model="page"
+      ></v-pagination
     ></v-col>
     <ProgressCircle :array="news"
   /></v-row>

@@ -18,8 +18,8 @@
           <v-form @submit.prevent="handleSubmit(onLogin)" class="mx-5">
             <VTextFieldWithValidation
               type="text"
-              placeholder="Username"
-              rules="username"
+              placeholder="Email"
+              rules="emailRequired"
               v-model="email"
               outlined
               dense
@@ -28,7 +28,7 @@
               placeholder="Password"
               type="password"
               vid="password"
-              rules="pass|min:8"
+              rules="pass|minPassword:8"
               v-model="password"
               outlined
               dense

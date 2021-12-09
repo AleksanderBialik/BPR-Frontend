@@ -20,19 +20,28 @@ extend("username", {
   message: "Username can't be empty!",
 });
 
+extend("usernameRegex", {
+  validate: (value) => value.match(/^[a-zA-Z0-9]*[-]?[a-zA-Z0-9]*$/),
+  message: "Invalid characters!",
+});
+
 extend("pass", {
   ...required,
   message: "Password can't be empty!",
 });
 
-extend("max", {
-  ...max,
-  message: "This field can containy only {length} characters!",
+extend("emailRequired", {
+  ...required,
+  message: "Email address can't be empty!",
 });
 
 extend("email", {
   ...email,
   message: "Email address is not correct!",
+});
+extend("max", {
+  ...max,
+  message: "This field can containy only {length} characters!",
 });
 
 extend("numeric", {
@@ -47,6 +56,11 @@ extend("min_value", {
 extend("min", {
   ...min,
   message: "This field must contain atleast {length} characters!",
+});
+
+extend("minPassword", {
+  ...min,
+  message: "Password must contain atleast {length} characters!",
 });
 
 extend("checkbox", {
