@@ -55,12 +55,12 @@ extend("min_value", {
 });
 extend("min", {
   ...min,
-  message: "This field must contain atleast {length} characters!",
+  message: "This field must contain at least {length} characters!",
 });
 
 extend("minPassword", {
   ...min,
-  message: "Password must contain atleast {length} characters!",
+  message: "Password must contain at least {length} characters!",
 });
 
 extend("checkbox", {

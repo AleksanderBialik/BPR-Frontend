@@ -52,6 +52,9 @@ export default {
       this.chart.chart.data = this.values;
       this.$refs.tradingVue.resetChart();
     },
+    setData() {
+      this.chart.chart.data = this.values;
+    },
   },
   data() {
     return {

@@ -39,14 +39,7 @@
       </v-btn>
       <v-spacer></v-spacer>
 
-      <v-menu
-        top
-        v-model="menu"
-        :close-on-click="closeOnClick"
-        nudge-bottom="105"
-        nudge-left="54"
-        bottom
-      >
+      <v-menu top v-model="menu" nudge-bottom="105" nudge-left="54" bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-app-bar-nav-icon
             color="white"
@@ -93,6 +86,14 @@
           fillHeight.includes(route) || getStockPageInfo() || getNewsPageInfo()
         "
       >
+        <v-btn
+          v-if="!fillHeight.includes($route.name)"
+          style="margin-left: 50px; margin-bottom: 100px"
+          fixed
+          bottom
+          fab
+          ><v-icon>$question</v-icon></v-btn
+        >
         <v-fade-transition mode="out-in">
           <router-view />
         </v-fade-transition>
@@ -158,7 +159,6 @@ export default {
   },
   watch: {
     $route() {
-      console.log(this.$route.name);
       if (this.noWs.includes(this.$route.name)) {
         this.closeWs();
       } else if (!this.connection) {
@@ -236,7 +236,11 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@font-face {
+  font-family: Chomsky;
+  src: local("Chomsky"), url(./assets/Chomsky.otf) format("OpenType");
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -260,6 +264,10 @@ html {
 }
 .titleText {
   font-size: 17em;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 .position {
   position: absolute !important;
@@ -268,6 +276,10 @@ html {
   left: 0 !important;
   right: 0 !important;
   text-align: center !important;
+}
+.shadow {
+  -webkit-box-shadow: 7px 8px 20px 7px #000000 !important;
+  box-shadow: 7px 8px 20px 7px #000000 !important;
 }
 </style>
 

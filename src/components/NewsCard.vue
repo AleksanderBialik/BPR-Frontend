@@ -5,7 +5,7 @@
         <v-card
           style="border-radius: 25px !important"
           height="100%"
-          :class="{ shadow: true, shadowIn: hover }"
+          :class="{ shadowOut: !hover, shadowIn: hover }"
           tile
           :href="href"
           target="_blank"
@@ -153,14 +153,14 @@ export default {
   transition: transform 0.5s; /* Animation */
   transform: scale(1);
 }
-.shadow {
-  transition: box-shadow 0.5s ease-in-out;
-  -webkit-box-shadow: 12px 11px 25px -9px #000000 !important;
-  box-shadow: 12px 11px 25px -9px #000000 !important;
-}
 .shadowIn {
   transition: box-shadow 0.5s ease-in-out;
   -webkit-box-shadow: 14px 15px 25px -1px #000000 !important;
   box-shadow: 14px 15px 25px -1px #000000 !important;
+}
+.shadowOut {
+  transition: box-shadow 0.5s ease-in-out !important;
+  -webkit-box-shadow: 12px 11px 25px -9px #000000 !important;
+  box-shadow: 12px 11px 25px -9px #000000 !important;
 }
 </style>

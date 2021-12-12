@@ -9,7 +9,8 @@
       transition="scale-transition"
     >
       <div class="d-flex align-center">
-        <font-awesome-icon :icon="icon" class="mr-3" />
+        <v-icon class="mr-3">{{ icon }}</v-icon>
+        <!-- <font-awesome-icon :icon="icon" class="mr-3" /> -->
         <span>{{ message }}</span>
       </div>
 

@@ -5,7 +5,7 @@
     </v-col>
     <v-col cols="6">
       <v-card
-        shaped
+        style="border-radius: 30px"
         class="pt-10"
         color="rgba(255, 255, 255, 1)"
         elevation="24"
@@ -18,7 +18,7 @@
           <v-form @submit.prevent="handleSubmit(onRegister)" class="mx-5">
             <VTextFieldWithValidation
               type="text"
-              placeholder="Email"
+              label="Email"
               rules="emailRequired|email"
               v-model="email"
               outlined
@@ -26,14 +26,14 @@
             />
             <VTextFieldWithValidation
               type="text"
-              placeholder="Username"
+              label="Username"
               rules="username|usernameRegex"
               v-model="username"
               outlined
               dense
             />
             <VTextFieldWithValidation
-              placeholder="Password"
+              label="Password"
               type="password"
               vid="password"
               rules="pass|minPassword:8"
@@ -43,7 +43,7 @@
             />
 
             <VTextFieldWithValidation
-              placeholder="Confirm password"
+              label="Confirm password"
               type="password"
               v-model="confirmPassword"
               rules="pass|password:@password"

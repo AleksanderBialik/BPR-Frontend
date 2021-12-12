@@ -1,6 +1,4 @@
 import axios from "../../axios";
-// import router from "../../router";
-// import jwt_decode from "jwt-decode";
 
 const stocks = {
   namespaced: true,
@@ -57,6 +55,23 @@ const stocks = {
         dispatch(
           "snackbar/setErrorSnackbar",
           "Couldn't retrieve the candles!",
+          {
+            root: true,
+          }
+        );
+      }
+    },
+    async tradeStocks({ dispatch }, object) {
+      try {
+        let data = {
+          s: object.symbol,
+          am: object.amount,
+        };
+        await axios.post(`stock/${object.type}/${object.action}`, data);
+      } catch (error) {
+        dispatch(
+          "snackbar/setErrorSnackbar",
+          `${error.response.data.message}`,
           {
             root: true,
           }

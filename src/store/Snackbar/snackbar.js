@@ -11,17 +11,17 @@ const snackbar = {
   mutations: {
     setSuccessSnackbar(state, message) {
       state.color = "success";
-      state.icon = "check";
+      state.icon = "$check";
       state.message = message;
     },
     setErrorSnackbar(state, message) {
       state.color = "error";
-      state.icon = "exclamation-triangle";
+      state.icon = "$exclamationTriangle";
       state.message = message;
     },
     setWarningSnackbar(state, message) {
-      state.icon = "exclamation-triangle";
-      state.color = "warning";
+      state.icon = "$exclamationCircle";
+      state.color = "primary";
       state.message = message;
     },
     toggleSnackbar(state, payload) {

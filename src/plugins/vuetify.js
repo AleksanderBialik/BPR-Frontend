@@ -80,6 +80,36 @@ export default new Vuetify({
           icon: "eye",
         },
       },
+      question: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "question",
+        },
+      },
+      up: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "chevron-up",
+        },
+      },
+      check: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "check",
+        },
+      },
+      exclamationCircle: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "exclamation-circle",
+        },
+      },
+      exclamationTriangle: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "exclamation-triangle",
+        },
+      },
     },
   },
 });

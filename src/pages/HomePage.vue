@@ -5,7 +5,9 @@
     align-content="stretch"
   >
     <v-col class="text-center" v-show="news.length != 0"
-      ><h1 style="font-size: 100px' ;font-style: italic;">Stock News</h1></v-col
+      ><h1 class="header">
+        Stock New<span style="font-size: 65px">$</span>
+      </h1></v-col
     >
     <v-col v-show="news.length != 0" cols="12"
       ><v-pagination
@@ -17,11 +19,9 @@
     ></v-col>
     <v-col
       v-show="news.length != 0"
-      cols="6"
+      cols="12"
       sm="6"
       md="4"
-      lg="4"
-      xl="4"
       :class="{
         'column-margin':
           index + 1 == getSlicedNews().length &&
@@ -87,4 +87,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.header {
+  color: white;
+  font-size: 90px;
+  font-family: "Chomsky";
+}
+</style>

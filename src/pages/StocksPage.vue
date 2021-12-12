@@ -1,9 +1,10 @@
 <template>
   <v-row style="max-width: 1400px; margin: auto">
     <v-col cols="12">
-      <v-card>
+      <v-card class="shadow">
         <v-card-actions>
           <v-autocomplete
+            color="black"
             v-model="stockSearch"
             :items="stocks"
             item-text="displaySymbol"
@@ -20,9 +21,9 @@
         </v-card-actions>
       </v-card>
     </v-col>
-    <v-col cols="12">
+    <v-col class="mt-3" cols="12">
       <v-data-table
-        class="row-pointer"
+        class="row-pointer shadow"
         @click:row="chooseStock"
         :loading="stocks.length === 0"
         loading-text="No stocks found!"

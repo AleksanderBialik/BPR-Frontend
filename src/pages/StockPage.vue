@@ -1,7 +1,13 @@
 <template>
   <v-row
     :class="{ position: stockCandles.length === 0 }"
-    style="max-width: 1400px; margin: auto; background-color: white"
+    class="shadow"
+    style="
+      max-width: 1400px;
+      margin: auto;
+      background-color: white;
+      border-radius: 4px;
+    "
   >
     <v-col
       cols="12"
@@ -13,8 +19,6 @@
     >
       <v-card
         :ripple="false"
-        target="_blank"
-        :href="stock.profile.weburl"
         width="30%"
         flat
         :class="{ 'flex-column': $vuetify.breakpoint.mdAndDown }"
@@ -23,10 +27,26 @@
           :class="{ 'flex-column': $vuetify.breakpoint.mdAndDown }"
           flat
           class="d-flex justify-start align-start"
-          ><v-card-title class="pb-0"
-            ><v-img height="40px" width="40px" :src="stock.profile.logo"></v-img
-            >{{ stock.profile.name }}</v-card-title
-          >
+        >
+          <a target="_blank" :href="stock.profile.weburl"
+            ><v-card-title class="pb-0"
+              ><v-img
+                v-if="stock.profile.logo != ''"
+                contain
+                height="40px"
+                width="40px"
+                :src="stock.profile.logo"
+              ></v-img>
+              <v-img
+                v-else
+                contain
+                height="40px"
+                width="40px"
+                src="../assets/noimage.png"
+              ></v-img
+              >{{ stock.profile.name }}</v-card-title
+            >
+          </a>
         </v-card>
         <v-card-text class="py-0">{{ stock.profile.ticker }} </v-card-text>
         <v-card-text class="py-0">{{ stock.profile.exchange }}</v-card-text>
@@ -107,8 +127,11 @@
       />
     </v-col>
     <v-col class="d-flex justify-center" cols="12">
-      <v-btn @click="trade = !trade" class="ma-2 white--text" color="success"
-        >Trading
+      <v-btn @click="trade = !trade" class="ma-2 white--text" color="success">
+        <span
+          ><span>Trading</span>
+          <v-icon dense class="ml-1" :class="{ flip: trade }"> $up </v-icon>
+        </span>
       </v-btn>
     </v-col>
     <v-col v-if="trade" class="">
@@ -121,6 +144,7 @@
                 outlined
                 label="Action"
                 item-value="value"
+                color="black"
                 item-text="name"
                 v-model="selectedAction"
                 :items="actions"
@@ -131,15 +155,19 @@
               <v-text-field
                 type="number"
                 label="Quantity"
+                color="black"
                 dense
                 outlined
-                v-model="quantity"
+                v-model.number="quantity"
               ></v-text-field>
             </div>
           </div>
           <div>
             <v-card-actions class="d-flex justify-start pl-6"
-              ><v-btn :disabled="selectedAction === null || quantity === null"
+              ><v-btn
+                color="success"
+                @click="placeOrder()"
+                :disabled="selectedAction === null || quantity === null"
                 >Order</v-btn
               >
               <v-btn @click="clear()">Clear</v-btn></v-card-actions
@@ -177,17 +205,16 @@ export default {
       actions: [
         { name: "Buy", value: "longBuy" },
         { name: "Sell", value: "longSell" },
-        { name: "Short", value: "shortBuy" },
-        { name: "Buy To Cover", value: "shortSell" },
+        { name: "Short", value: "shortSell" },
+        { name: "Buy To Cover", value: "shortCover" },
       ],
       selectedAction: null,
       quantity: null,
     };
   },
   updated() {
-    console.log(this.$refs.diagramCol.clientWidth);
     this.diagramWidth = this.$refs.diagramCol.clientWidth;
-    this.$refs.chart.resetChart();
+    this.$refs.chart.setData();
   },
   watch: {
     quantity() {
@@ -212,6 +239,32 @@ export default {
     },
   },
   methods: {
+    placeOrder() {
+      let object = {
+        symbol: "",
+        amount: 0,
+        type: "",
+        action: "",
+      };
+      console.log(typeof object.amount);
+      object.symbol = this.$route.params.stockSymbol;
+      object.amount = this.quantity;
+      if (this.selectedAction === "longBuy") {
+        object.type = "long";
+        object.action = "buy";
+      } else if (this.selectedAction === "longSell") {
+        object.type = "long";
+        object.action = "sell";
+      } else if (this.selectedAction === "shortSell") {
+        object.type = "short";
+        object.action = "sell";
+      } else {
+        object.type = "short";
+        object.action = "cover";
+      }
+      console.log(object);
+      this.$store.dispatch("stocks/tradeStocks", object);
+    },
     resizeHandler() {
       this.diagramWidth = this.$refs.diagramCol.clientWidth;
     },
@@ -229,5 +282,12 @@ export default {
 <style lang="scss" scoped>
 .v-card--link:before {
   background: none;
+}
+a {
+  text-decoration: none;
+  color: black !important;
+}
+.flip {
+  transform: rotateX(180deg);
 }
 </style>
