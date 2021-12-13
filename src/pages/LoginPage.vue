@@ -3,12 +3,11 @@
     <v-col style="z-index: 9999" cols="12">
       <h1 class="text-center titleText" style="color: white">Login</h1>
     </v-col>
-    <v-col cols="6">
+    <v-col style="z-index: 9999" cols="6">
       <v-card
         style="border-radius: 30px"
-        class="pt-10"
+        class="pt-10 shadow"
         color="rgba(255, 255, 255, 1)"
-        elevation="24"
       >
         <ValidationObserver
           ref="logObs"

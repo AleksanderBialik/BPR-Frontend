@@ -27,24 +27,47 @@ const stocks = {
         const response = await axios.get("stock/symbols", {});
         commit("SET_STOCKS", response.data);
       } catch (error) {
-        dispatch("snackbar/setErrorSnackbar", "Couldn't retrieve the stocks!", {
-          root: true,
-        });
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
     async fetchStock({ commit, dispatch }, object) {
       try {
         const response = await axios.get(`stock/company/info?symbol=${object}`);
-        console.log(response.data);
         commit("SET_STOCK", response.data);
       } catch (error) {
-        dispatch(
-          "snackbar/setErrorSnackbar",
-          "Couldn't retrieve the stock data!",
-          {
-            root: true,
-          }
-        );
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
     async fetchStockCandles({ commit, dispatch }, object) {
@@ -52,13 +75,23 @@ const stocks = {
         const response = await axios.get(`stock/candles?symbol=${object}`);
         commit("SET_STOCK_CANDLES", response.data);
       } catch (error) {
-        dispatch(
-          "snackbar/setErrorSnackbar",
-          "Couldn't retrieve the candles!",
-          {
-            root: true,
-          }
-        );
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
     async tradeStocks({ dispatch }, object) {
@@ -68,14 +101,32 @@ const stocks = {
           am: object.amount,
         };
         await axios.post(`stock/${object.type}/${object.action}`, data);
-      } catch (error) {
         dispatch(
-          "snackbar/setErrorSnackbar",
-          `${error.response.data.message}`,
+          "snackbar/setSuccessSnackbar",
+          `Stocks have been traded successfully!`,
           {
             root: true,
           }
         );
+      } catch (error) {
+        console.log(error.response);
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
   },

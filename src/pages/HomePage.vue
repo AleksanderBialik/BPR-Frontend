@@ -5,7 +5,7 @@
     align-content="stretch"
   >
     <v-col class="text-center" v-show="news.length != 0"
-      ><h1 class="header">
+      ><h1 class="header titleText">
         Stock New<span style="font-size: 65px">$</span>
       </h1></v-col
     >

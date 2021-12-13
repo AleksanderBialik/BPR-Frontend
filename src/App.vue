@@ -39,7 +39,13 @@
       </v-btn>
       <v-spacer></v-spacer>
 
-      <v-menu top v-model="menu" nudge-bottom="105" nudge-left="54" bottom>
+      <v-menu
+        top
+        v-model="menu"
+        :nudge-bottom="token.admin ? '155' : '105'"
+        :nudge-left="token.admin ? '100' : '54'"
+        bottom
+      >
         <template v-slot:activator="{ on, attrs }">
           <v-app-bar-nav-icon
             color="white"
@@ -54,6 +60,18 @@
 
         <v-list>
           <v-list-item-group>
+            <v-list-item
+              v-if="token.admin"
+              class="pl-3"
+              v-on:click="$router.push('/admin')"
+            >
+              <v-icon medium class="pr-2">$admin</v-icon>
+              <v-list-item-content
+                ><v-list-item-title
+                  >Admin Panel</v-list-item-title
+                ></v-list-item-content
+              >
+            </v-list-item>
             <v-list-item :to="{ path: `/settings` }" class="pl-3">
               <v-icon medium class="pr-2">$gear</v-icon>
               <v-list-item-content>
@@ -76,7 +94,6 @@
     </v-app-bar>
     <v-main
       :class="{
-        background: stonksBackground.includes(route),
         errorBackground: route === 'error',
       }"
     >
@@ -87,7 +104,7 @@
         "
       >
         <v-btn
-          v-if="!fillHeight.includes($route.name)"
+          v-if="!noFab.includes($route.name)"
           style="margin-left: 50px; margin-bottom: 100px"
           fixed
           bottom
@@ -95,8 +112,17 @@
           ><v-icon>$question</v-icon></v-btn
         >
         <v-fade-transition mode="out-in">
-          <router-view />
+          <router-view> </router-view>
         </v-fade-transition>
+        <video
+          autoplay
+          muted
+          loop
+          id="myVideo"
+          v-if="videoBackground.includes($route.name)"
+        >
+          <source src="./assets/video.mp4" type="video/mp4" />
+        </video>
       </v-container>
     </v-main>
     <Snackbar />
@@ -169,7 +195,8 @@ export default {
 
   data: () => ({
     fillHeight: ["login", "register", "entry", "error", "accountCreated"],
-    stonksBackground: ["login", "register", "accountCreated"],
+    noFab: ["login", "register", "entry", "error", "accountCreated", "admin"],
+    videoBackground: ["login", "register", "entry", "accountCreated"],
     noWs: ["login", "entry", "register", "accountCreated"],
     drawer: false,
     selectedButton: "green",
@@ -187,6 +214,9 @@ export default {
     },
     news() {
       return this.$store.getters["news/getNews"];
+    },
+    token() {
+      return this.$store.getters["authentication/getToken"];
     },
   },
   methods: {
@@ -254,10 +284,10 @@ export default {
 html {
   overflow-y: auto;
 }
-.background {
-  background-image: url("./assets/stonks.png");
-  background-size: 100% 100%;
-}
+// .background {
+//   background-image: url("./assets/stonks.png");
+//   background-size: 100% 100%;
+// }
 .errorBackground {
   background-image: url("./assets/notStonks.png");
   background-size: 100% 100%;
@@ -284,6 +314,13 @@ html {
 </style>
 
 <style lang="scss" scoped>
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
 ::v-deep .v-btn__content {
   display: flex;
   flex-direction: column;

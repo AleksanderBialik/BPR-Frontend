@@ -10,6 +10,7 @@ import PortfolioPage from "./pages/PortfolioPage";
 import StocksPage from "./pages/StocksPage";
 import StockPage from "./pages/StockPage";
 import SettingsPage from "./pages/SettingsPage";
+import AdminPage from "./pages/AdminPage";
 import jwt_decode from "jwt-decode";
 import store from "./store";
 // import store from "./store";
@@ -78,6 +79,11 @@ let router = new Router({
       path: "/settings",
       name: "settings",
       component: SettingsPage,
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      component: AdminPage,
     },
     {
       path: "*",

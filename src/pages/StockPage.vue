@@ -136,10 +136,11 @@
     </v-col>
     <v-col v-if="trade" class="">
       <v-card flat class="d-flex justify-start align-end"
-        ><div>
-          <div class="d-flex justify-space-around pt-3">
+        ><div style="width: 100%">
+          <div style="width: 60%" class="d-flex justify-space-around pt-3">
             <div style="width: 50%">
               <v-select
+                item-color="green"
                 dense
                 outlined
                 label="Action"
@@ -151,7 +152,35 @@
                 :menu-props="{ bottom: true, offsetY: true }"
               ></v-select>
             </div>
-            <div style="width: 30%">
+            <div class="ml-3" style="width: 30%">
+              <v-select
+                item-color="green"
+                dense
+                outlined
+                label="Order Type"
+                item-value="value"
+                color="black"
+                item-text="name"
+                v-model="orderType"
+                :items="orderTypes"
+                :menu-props="{ bottom: true, offsetY: true }"
+              ></v-select>
+            </div>
+            <div
+              v-if="orderType != 'market' && orderType != null"
+              class="ml-3"
+              style="width: 20%"
+            >
+              <v-text-field
+                type="number"
+                label="Price"
+                color="black"
+                dense
+                outlined
+                v-model.number="price"
+              ></v-text-field>
+            </div>
+            <div class="ml-3" style="width: 20%">
               <v-text-field
                 type="number"
                 label="Quantity"
@@ -197,6 +226,7 @@ export default {
     );
     this.$store.dispatch("stocks/fetchStock", this.$route.params.stockSymbol);
     window.addEventListener("resize", this.resizeHandler);
+    this.checkQuery();
   },
   data() {
     return {
@@ -208,8 +238,15 @@ export default {
         { name: "Short", value: "shortSell" },
         { name: "Buy To Cover", value: "shortCover" },
       ],
+      orderTypes: [
+        { name: "Limit", value: "limit" },
+        { name: "Market", value: "market" },
+        { name: "Stop Limit", value: "stopLimit" },
+      ],
       selectedAction: null,
+      orderType: null,
       quantity: null,
+      price: null,
     };
   },
   updated() {
@@ -221,6 +258,12 @@ export default {
       if (this.quantity === "") {
         this.quantity = null;
       }
+      if (this.quantity < 0) {
+        this.quantity = this.quantity * -1;
+      }
+      // if (this.quantity === 0) {
+      //   this.quantity = "";
+      // }
     },
     $route() {
       this.$store.dispatch(
@@ -246,7 +289,6 @@ export default {
         type: "",
         action: "",
       };
-      console.log(typeof object.amount);
       object.symbol = this.$route.params.stockSymbol;
       object.amount = this.quantity;
       if (this.selectedAction === "longBuy") {
@@ -262,8 +304,11 @@ export default {
         object.type = "short";
         object.action = "cover";
       }
-      console.log(object);
       this.$store.dispatch("stocks/tradeStocks", object);
+      this.selectedAction = null;
+      this.orderType = null;
+      this.price = null;
+      this.quantity = null;
     },
     resizeHandler() {
       this.diagramWidth = this.$refs.diagramCol.clientWidth;
@@ -271,6 +316,21 @@ export default {
     clear() {
       this.selectedAction = null;
       this.quantity = null;
+    },
+    checkQuery() {
+      if (this.$route.query.action) {
+        this.trade = true;
+        const action = this.$route.query.action;
+        if (action === "Buy") {
+          this.selectedAction = "longBuy";
+        } else if (action === "Sell") {
+          this.selectedAction = "longSell";
+        } else if (action === "Short") {
+          this.selectedAction = "shortSell";
+        } else if (action === "Cover") {
+          this.selectedAction = "shortCover";
+        }
+      }
     },
   },
   destroyed() {

@@ -1,7 +1,12 @@
 <template>
   <v-row justify="center">
-    <v-col cols="6">
-      <v-card shaped class="pt-5" color="rgba(255, 255, 255, 1)" elevation="24">
+    <v-col style="z-index: 9999" cols="4">
+      <v-card
+        style="border-radius: 30px"
+        class="shadow"
+        color="rgba(255, 255, 255, 1)"
+        elevation="24"
+      >
         <v-card-title class="justify-center"
           >Account created successfully!</v-card-title
         >

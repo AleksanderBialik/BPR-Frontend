@@ -21,9 +21,23 @@ const news = {
         const response = await axios.get("news");
         commit("SET_NEWS", response.data);
       } catch (error) {
-        dispatch("snackbar/setErrorSnackbar", "Couldn't retrieve the news!", {
-          root: true,
-        });
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
   },

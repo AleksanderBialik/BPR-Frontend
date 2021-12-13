@@ -4,6 +4,7 @@
       <v-card class="shadow">
         <v-card-actions>
           <v-autocomplete
+            item-color="green"
             color="black"
             v-model="stockSearch"
             :items="stocks"

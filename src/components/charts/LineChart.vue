@@ -11,44 +11,26 @@ export default {
   components: {
     LineChart,
   },
+  props: ["statistics"],
   data() {
     return {
       datacollection: null,
       options: null,
     };
   },
-  mounted() {
-    this.fillData();
+  watch: {
+    statistics() {
+      this.fillData();
+    },
   },
   methods: {
     fillData() {
-      var months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
       this.datacollection = {
-        labels: months,
+        labels: this.statistics.x,
         datasets: [
           {
-            label: "My First Dataset",
-            data: [65, 59, 80, 81, 56, 55, 40, 1],
-            fill: false,
-            borderColor: "rgb(75, 192, 192)",
-            tension: 0.1,
-          },
-          {
-            label: "My First Dataset",
-            data: [60, 1, 2, 31, 46, 5, 66, 2],
+            label: this.statistics.name,
+            data: this.statistics.y,
             fill: false,
             borderColor: "rgb(75, 192, 192)",
             tension: 0.1,

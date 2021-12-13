@@ -110,6 +110,12 @@ export default new Vuetify({
           icon: "exclamation-triangle",
         },
       },
+      admin: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "user-shield",
+        },
+      },
     },
   },
 });

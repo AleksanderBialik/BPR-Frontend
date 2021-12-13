@@ -34,9 +34,23 @@ const authentication = {
       } catch (error) {
         commit("SET_TOKEN", null);
         localStorage.removeItem("token");
-        dispatch("snackbar/setErrorSnackbar", "Error while logging in!", {
-          root: true,
-        });
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
     async register({ dispatch, commit }, object) {
@@ -52,13 +66,23 @@ const authentication = {
         });
         router.push({ name: "accountCreated" });
       } catch (error) {
-        dispatch(
-          "snackbar/setErrorSnackbar",
-          "Error while trying to register!",
-          {
-            root: true,
-          }
-        );
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
     async logout({ commit, dispatch }) {
@@ -71,7 +95,23 @@ const authentication = {
 
         commit("SET_TOKEN", null);
       } catch (error) {
-        console.log(error.response);
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
   },

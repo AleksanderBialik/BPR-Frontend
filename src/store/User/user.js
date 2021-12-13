@@ -7,11 +7,15 @@ const user = {
   state: () => ({
     user: {},
     portfolio: {},
+    statistics: {},
   }),
 
   mutations: {
     SET_USER(state, user) {
       state.user = user;
+    },
+    SET_STATISTICS(state, statistics) {
+      state.statistics = statistics;
     },
     SET_PORTFOLIO(state, portfolio) {
       state.portfolio = portfolio;
@@ -25,9 +29,23 @@ const user = {
         console.log(response.data);
         commit("SET_USER", response.data);
       } catch (error) {
-        dispatch("snackbar/setErrorSnackbar", `${error}`, {
-          root: true,
-        });
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
     async fetchPortfolio({ commit, dispatch }) {
@@ -36,9 +54,48 @@ const user = {
         console.log(response.data);
         commit("SET_PORTFOLIO", response.data);
       } catch (error) {
-        dispatch("snackbar/setErrorSnackbar", `${error}`, {
-          root: true,
-        });
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
+      }
+    },
+    async fetchStatistics({ commit, dispatch }) {
+      try {
+        const response = await axios.get(`user/statistics`);
+        console.log(response.data);
+        commit("SET_STATISTICS", response.data);
+      } catch (error) {
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
     async changePassword({ dispatch }, object) {
@@ -51,9 +108,23 @@ const user = {
           root: true,
         });
       } catch (error) {
-        dispatch("snackbar/setErrorSnackbar", `${error}`, {
-          root: true,
-        });
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
     async deleteAccount({ dispatch }) {
@@ -64,15 +135,30 @@ const user = {
         });
         router.push("/entry");
       } catch (error) {
-        dispatch("snackbar/setErrorSnackbar", `${error}`, {
-          root: true,
-        });
+        if (error.response.data.error === "info") {
+          dispatch(
+            "snackbar/setWarningSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        } else {
+          dispatch(
+            "snackbar/setErrorSnackbar",
+            `${error.response.data.message}`,
+            {
+              root: true,
+            }
+          );
+        }
       }
     },
   },
 
   getters: {
     getUser: (state) => state.user,
+    getStatistics: (state) => state.statistics,
     getPortfolio: (state) => state.portfolio,
   },
 };
