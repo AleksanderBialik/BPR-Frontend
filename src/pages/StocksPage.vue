@@ -64,7 +64,11 @@ export default {
 
   computed: {
     stocks() {
-      return this.$store.getters["stocks/getStocks"];
+      const stocks = this.$store.getters["stocks/getStocks"];
+      const sortedStocks = stocks.sort((a, b) =>
+        a.symbol.localeCompare(b.symbol)
+      );
+      return sortedStocks;
     },
   },
   methods: {

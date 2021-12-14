@@ -108,6 +108,7 @@ const stocks = {
             root: true,
           }
         );
+        dispatch("fetchStock", object.symbol);
       } catch (error) {
         console.log(error.response);
         if (error.response.data.error === "info") {

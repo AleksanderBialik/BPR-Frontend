@@ -109,11 +109,23 @@
           fixed
           bottom
           fab
+          @click="globalModal = !globalModal"
           ><v-icon>$question</v-icon></v-btn
         >
         <v-fade-transition mode="out-in">
           <router-view> </router-view>
         </v-fade-transition>
+        <v-dialog width="500" v-model="globalModal"
+          ><v-card
+            ><v-card-title>{{ getPageName() }}</v-card-title>
+            <v-card-text>{{ getPageDescription() }}</v-card-text>
+            <v-card-actions class="d-flex justify-center"
+              ><v-btn @click="globalModal = false" color="success"
+                >ok!</v-btn
+              ></v-card-actions
+            ></v-card
+          ></v-dialog
+        >
         <video
           autoplay
           muted
@@ -204,6 +216,7 @@ export default {
     connection: null,
     menu: "",
     wsData: null,
+    globalModal: false,
   }),
   computed: {
     route() {
@@ -220,6 +233,30 @@ export default {
     },
   },
   methods: {
+    getPageName() {
+      const route = this.$route.name;
+      if (route === "home") {
+        return "Main Page";
+      } else if (route === "stocks") {
+        return "Stocks Page";
+      } else if (route === "stock") {
+        return "Stock Page";
+      } else if (route === "portfolio") {
+        return "Portfolio Page";
+      }
+    },
+    getPageDescription() {
+      const route = this.$route.name;
+      if (route === "home") {
+        return "This is the main page on which you can find interesting news from the world of stocks";
+      } else if (route === "stocks") {
+        return "Currently you are on the stocks page! On this page you can find over 5 thousand various stocks from the NASDAQ stock market. If you want to know more about certain stock just click the row in the table and you will be transfered to the new page. Can't find the stock on the list? Type the company name or the stock symbol in the searchbar on the top";
+      } else if (route === "stock") {
+        return "Welcome to the stock page! On this page you can find a lot of informations regarding certain stock. Moreover you can also trade stocks here. Click the trading button and get right into it. More information about certain indicators, values etc. can be found after hovering the question marks";
+      } else if (route === "portfolio") {
+        return "Welcome to the most important page in the application! The Portfolio Page. Here you can see all of the informations regarding your purchases and performance. Many tables and charts are here to help you organise your work and give you insightful informations regarding your progress. To find more information abot certain indicators, values etc. hover the question marks";
+      }
+    },
     logout() {
       this.menu = false;
       this.$store.dispatch("authentication/logout");

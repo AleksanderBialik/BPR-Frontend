@@ -12,6 +12,7 @@
     >
       <v-icon>$eye</v-icon></v-btn
     >
+    <tooltip color="white" :stl="true" cls medium absolute />
     <trading-vue
       :width="width - 24"
       style="margin-left: auto; margin-right: auto"
@@ -23,11 +24,12 @@
   </div>
 </template>
 <script>
+import Tooltip from "../Tooltip.vue";
 import TradingVue from "trading-vue-js";
 
 export default {
   name: "StocksChart",
-  components: { TradingVue },
+  components: { TradingVue, Tooltip },
   props: ["values", "name", "type", "width"],
 
   watch: {

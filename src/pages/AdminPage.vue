@@ -65,7 +65,6 @@ export default {
     removeUser(user) {
       this.$store.dispatch("admin/deleteUser", user.email);
     },
-    checkUsers() {},
   },
 };
 </script>

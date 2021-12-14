@@ -18,7 +18,7 @@
             <VTextFieldWithValidation
               type="text"
               label="Email"
-              rules="emailRequired"
+              rules="emailRequired|email"
               v-model="email"
               outlined
               dense

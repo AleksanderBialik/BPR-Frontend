@@ -10,11 +10,14 @@
         <v-card-title class="justify-center"
           >Account created successfully!</v-card-title
         >
-        <v-card-text class="text-center"
+        <v-card-text class="text-center pb-0"
           >The confirmation link has been sent to {{ getEmail }}
         </v-card-text>
+        <v-card-text class="text-center pt-0" style="font-size: 11px"
+          >*check spam</v-card-text
+        >
         <v-card-actions class="justify-center">
-          <v-btn x-large :to="{ name: 'login' }" color="success">LOGIN</v-btn>
+          <v-btn :to="{ name: 'login' }" color="success">LOGIN</v-btn>
         </v-card-actions>
       </v-card>
     </v-col>

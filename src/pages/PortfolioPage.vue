@@ -31,18 +31,17 @@
           <v-card flat>
             <v-card-subtitle class="pb-1">Cash</v-card-subtitle>
             <v-card-text
-              ><span style="font-size: 30px"
-                >{{ portfolio.credits }}<span style="font-size: 20px">USD</span>
+              ><span style="font-size: 30px; color: black"
+                >{{ formatCurrency(portfolio.credits) }}
               </span>
             </v-card-text></v-card
           >
           <v-card flat>
             <v-card-subtitle class="pb-1">Account value </v-card-subtitle>
             <v-card-text
-              ><span style="font-size: 30px"
-                >{{ portfolio.accountValue
-                }}<span style="font-size: 20px">USD</span></span
-              >
+              ><span style="font-size: 30px; color: black">{{
+                formatCurrency(portfolio.accountValue)
+              }}</span>
             </v-card-text></v-card
           ></v-card
         >
@@ -71,7 +70,7 @@
                         'green--text': item.g > 0,
                       }"
                     >
-                      {{ item.g.toFixed(2) }}$
+                      {{ formatCurrency(item.g) }}
                     </div>
                     <div
                       :class="{
@@ -84,10 +83,10 @@
                   </div>
                 </template>
                 <template v-slot:[`item.p`]="{ item }">
-                  <span>{{ item.p }}$</span>
+                  <span>{{ formatCurrency(item.p) }}</span>
                 </template>
                 <template v-slot:[`item.c`]="{ item }">
-                  <span>{{ item.c }}$</span>
+                  <span>{{ formatCurrency(item.c) }}</span>
                 </template>
                 <template v-slot:[`item.actions`]="{ item }">
                   <div class="pl-1">
@@ -117,7 +116,7 @@
                         'green--text': item.g > 0,
                       }"
                     >
-                      {{ item.g.toFixed(2) }}$
+                      {{ formatCurrency(item.g) }}
                     </div>
                     <div
                       :class="{
@@ -130,10 +129,10 @@
                   </div>
                 </template>
                 <template v-slot:[`item.p`]="{ item }">
-                  <span>{{ item.p }}$</span>
+                  <span>{{ formatCurrency(item.p) }}$</span>
                 </template>
                 <template v-slot:[`item.c`]="{ item }">
-                  <span>{{ item.c }}$</span>
+                  <span>{{ formatCurrency(item.c) }}</span>
                 </template>
                 <template v-slot:[`item.actions`]="{ item }">
                   <div class="pl-1">
@@ -151,10 +150,10 @@
         </v-tabs-items>
       </v-card>
     </v-col>
-    <v-col md="6" cols="12"
+    <v-col cols="12"
       ><v-card class="shadow">
         <div class="d-flex justify-start align-center">
-          <v-card-title>Trades</v-card-title>
+          <v-card-title>Trades History</v-card-title>
           <v-card-actions>
             <v-select
               item-color="green"
@@ -177,16 +176,16 @@
             <span>{{ formatDate(item.d) }}</span>
           </template>
           <template v-slot:[`item.p`]="{ item }">
-            <span>{{ item.p }}$</span>
+            <span>{{ formatCurrency(item.p) }}</span>
           </template></v-data-table
         ></v-card
       ></v-col
     >
-    <v-col md="6" cols="12"
+    <!-- <v-col md="6" cols="12"
       ><v-card class="shadow"
         ><v-card-title>Pending Trades</v-card-title> <v-divider></v-divider
         ><v-data-table></v-data-table></v-card
-    ></v-col>
+    ></v-col> -->
   </v-row>
 </template>
 <script>
@@ -208,7 +207,7 @@ export default {
         { text: "Amount", value: "am" },
         { text: "Buying price", value: "p" },
         { text: "Current price", value: "c" },
-        { text: "Gain/Loss", value: "g" },
+        { text: "Total Gain/Loss", value: "g" },
         { text: "Trade Actions", value: "actions", sortable: false },
       ],
       shortHeaders: [
@@ -217,7 +216,7 @@ export default {
         { text: "Amount", value: "am" },
         { text: "Buying price", value: "p" },
         { text: "Current price", value: "c" },
-        { text: "Gain/Loss", value: "g" },
+        { text: "Total Gain/Loss", value: "g" },
         {
           text: "Trade Actions",
           value: "actions",
@@ -274,7 +273,7 @@ export default {
       if (this.tradeType === "bought") {
         return this.portfolio.boughtStocks;
       } else if (this.tradeType === "sold") {
-        return this.portfolio.soldtStocks;
+        return this.portfolio.soldStocks;
       } else if (this.tradeType === "shorted") {
         return this.portfolio.shortStocks;
       } else if (this.tradeType === "cover") {
@@ -290,6 +289,14 @@ export default {
         return this.statistics[2];
       }
     },
+    formatCurrency(value) {
+      var formatter = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 0,
+      });
+      return formatter.format(value);
+    },
   },
 };
 </script>
@@ -297,8 +304,10 @@ export default {
 <style lang="scss" scoped>
 .textChange:hover {
   text-decoration: underline;
+  cursor: pointer;
+}
+.textChange {
   font-weight: bold;
   color: green;
-  cursor: pointer;
 }
 </style>
