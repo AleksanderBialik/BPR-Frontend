@@ -20,9 +20,9 @@
         <template v-slot:[`item.dateCreated`]="{ item }">
           <span>{{ formatDate(item.dateCreated) }}</span>
         </template>
-        <template v-slot:[`item.dateUpdated`]="{ item }">
-          <span v-if="item.dateUpdated">{{
-            formatDate(item.dateUpdated)
+        <template v-slot:[`item.dateLastAccessed`]="{ item }">
+          <span v-if="item.dateLastAccessed">{{
+            formatDate(item.dateLastAccessed)
           }}</span>
         </template>
       </v-data-table></v-col
@@ -50,7 +50,7 @@ export default {
         { text: "Email", value: "email" },
         { text: "Username", value: "username" },
         { text: "Creation date", value: "dateCreated" },
-        { text: "Update date", value: "dateUpdated" },
+        { text: "Last accessed", value: "dateLastAccessed" },
         { text: "Actions", value: "actions", sortable: false },
       ],
     };

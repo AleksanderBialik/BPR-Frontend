@@ -2,8 +2,12 @@
   <v-row style="max-width: 1400px; margin: auto">
     <v-col cols="12">
       <v-card class="shadow">
+        <v-card-title class="headerColor font-weight-bold"
+          >Search for stocks</v-card-title
+        >
+        <v-divider></v-divider>
         <v-card-actions>
-          <v-autocomplete
+          <!-- <v-autocomplete
             item-color="green"
             color="black"
             v-model="stockSearch"
@@ -18,23 +22,32 @@
               >&nbsp;&nbsp;
               {{ item.description }}
             </template></v-autocomplete
-          >
+          > -->
+          <v-text-field
+            v-model="search"
+            prepend-icon="$search"
+            color="green"
+          ></v-text-field>
         </v-card-actions>
       </v-card>
     </v-col>
     <v-col class="mt-3" cols="12">
-      <v-data-table
-        class="row-pointer shadow"
-        @click:row="chooseStock"
-        :loading="stocks.length === 0"
-        loading-text="No stocks found!"
-        :headers="stocksHeaders"
-        :items="stocks"
-        :search="stockSearch"
-        :footer-props="{
-          'items-per-page-options': [10, 20, 30, 40, 50],
-        }"
-      ></v-data-table>
+      <v-card class="shadow">
+        <v-card-title class="headerColor font-weight-bold">Stocks</v-card-title>
+        <v-divider></v-divider>
+        <v-data-table
+          class="row-pointer"
+          @click:row="chooseStock"
+          :loading="stocks.length === 0"
+          loading-text="No stocks found!"
+          :headers="stocksHeaders"
+          :items="stocks"
+          :search="search"
+          :footer-props="{
+            'items-per-page-options': [10, 20, 30, 40, 50],
+          }"
+        ></v-data-table>
+      </v-card>
     </v-col>
   </v-row>
 </template>

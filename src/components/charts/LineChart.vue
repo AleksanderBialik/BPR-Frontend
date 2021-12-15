@@ -32,7 +32,7 @@ export default {
             label: this.statistics.name,
             data: this.statistics.y,
             fill: false,
-            borderColor: "rgb(75, 192, 192)",
+            borderColor: this.randomRgb(),
             tension: 0.1,
           },
         ],
@@ -106,6 +106,13 @@ export default {
       const diff = ((max - min) / 15).toFixed();
       return diff;
     },
+    randomRgb() {
+      var o = Math.round,
+        r = Math.random,
+        s = 255;
+      return "rgb(" + o(r() * s) + "," + o(r() * s) + "," + o(r() * s) + ")";
+    },
+
     formatCurrency(value) {
       var formatter = new Intl.NumberFormat("en-US", {
         style: "currency",

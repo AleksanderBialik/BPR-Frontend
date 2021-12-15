@@ -12,7 +12,14 @@
     >
       <v-icon>$eye</v-icon></v-btn
     >
-    <tooltip color="white" :stl="true" cls medium absolute />
+    <tooltip
+      color="white"
+      cls
+      bottom
+      medium
+      absolute
+      text="O: Opening price of the day</br> H: Highest price of the day</br> L: Lowest price of the day</br> C: Closing price of the day</br> V: Volume- it is simply the number of shares traded in a particular stock, index, or other investment over a specific period of time."
+    />
     <trading-vue
       :width="width - 24"
       style="margin-left: auto; margin-right: auto"

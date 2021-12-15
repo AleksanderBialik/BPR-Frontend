@@ -34,16 +34,17 @@
       <v-btn
         plain
         class="py-6"
-        :color="route === 'portfolio' ? selectedButton : buttonColor"
-        ><v-icon>$cart</v-icon> <span>Trade</span>
+        to="/ranking"
+        :color="route === 'ranking' ? selectedButton : buttonColor"
+        ><v-icon>$group</v-icon> <span>Ranking</span>
       </v-btn>
       <v-spacer></v-spacer>
 
       <v-menu
         top
         v-model="menu"
-        :nudge-bottom="token.admin ? '155' : '105'"
-        :nudge-left="token.admin ? '100' : '54'"
+        :nudge-bottom="token && token.admin ? '155' : '105'"
+        :nudge-left="token && token.admin ? '100' : '54'"
         bottom
       >
         <template v-slot:activator="{ on, attrs }">
@@ -61,7 +62,7 @@
         <v-list>
           <v-list-item-group>
             <v-list-item
-              v-if="token.admin"
+              v-if="token && token.admin"
               class="pl-3"
               v-on:click="$router.push('/admin')"
             >
@@ -207,7 +208,15 @@ export default {
 
   data: () => ({
     fillHeight: ["login", "register", "entry", "error", "accountCreated"],
-    noFab: ["login", "register", "entry", "error", "accountCreated", "admin"],
+    noFab: [
+      "login",
+      "register",
+      "entry",
+      "error",
+      "accountCreated",
+      "admin",
+      "settings",
+    ],
     videoBackground: ["login", "register", "entry", "accountCreated"],
     noWs: ["login", "entry", "register", "accountCreated"],
     drawer: false,
@@ -243,6 +252,8 @@ export default {
         return "Stock Page";
       } else if (route === "portfolio") {
         return "Portfolio Page";
+      } else if (route === "ranking") {
+        return "Ranking Page";
       }
     },
     getPageDescription() {
@@ -255,6 +266,8 @@ export default {
         return "Welcome to the stock page! On this page you can find a lot of informations regarding certain stock. Moreover you can also trade stocks here. Click the trading button and get right into it. More information about certain indicators, values etc. can be found after hovering the question marks";
       } else if (route === "portfolio") {
         return "Welcome to the most important page in the application! The Portfolio Page. Here you can see all of the informations regarding your purchases and performance. Many tables and charts are here to help you organise your work and give you insightful informations regarding your progress. To find more information abot certain indicators, values etc. hover the question marks";
+      } else if (route === "ranking") {
+        return "Welcome to the ranking page! Here you can see all of the best accounts and stocks that are most popular among players.";
       }
     },
     logout() {
@@ -263,7 +276,6 @@ export default {
     },
     startWs() {
       this.connection = new WebSocket(WS);
-      console.log("CONNECTED");
       this.connection.onmessage = (event) => {
         const data = JSON.parse(event.data);
         this.wsData = data;
@@ -347,6 +359,14 @@ html {
 .shadow {
   -webkit-box-shadow: 7px 8px 20px 7px #000000 !important;
   box-shadow: 7px 8px 20px 7px #000000 !important;
+}
+.headerColor {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.7567401960784313) 0%,
+    rgba(0, 74, 255, 0.26934523809523814) 100%
+  );
 }
 </style>
 

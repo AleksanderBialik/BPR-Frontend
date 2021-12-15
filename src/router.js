@@ -11,11 +11,9 @@ import StocksPage from "./pages/StocksPage";
 import StockPage from "./pages/StockPage";
 import SettingsPage from "./pages/SettingsPage";
 import AdminPage from "./pages/AdminPage";
+import RankingPage from "./pages/RankingPage";
 import jwt_decode from "jwt-decode";
 import store from "./store";
-// import store from "./store";
-// import moment from "moment";
-// import axios from "./axios"
 
 Vue.use(Router);
 
@@ -74,16 +72,34 @@ let router = new Router({
       path: "/stock/:stockSymbol",
       name: "stock",
       component: StockPage,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/settings",
       name: "settings",
       component: SettingsPage,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: "/ranking",
+      name: "ranking",
+      component: RankingPage,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/admin",
       name: "admin",
       component: AdminPage,
+      meta: {
+        requiresAuth: true,
+        isAdmin: true,
+      },
     },
     {
       path: "*",
@@ -99,6 +115,14 @@ router.beforeEach(async (to, from, next) => {
       jwt_decode(window.localStorage.getItem("token"));
     } catch (err) {
       store.dispatch("authentication/logout");
+    }
+    if (to.meta.isAdmin) {
+      const { admin } = jwt_decode(window.localStorage.getItem("token"));
+      if (admin) {
+        next();
+      } else {
+        router.push("/home");
+      }
     }
   } else {
     next();

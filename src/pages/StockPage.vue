@@ -73,7 +73,7 @@
       >
         <v-card flat>
           <v-card-subtitle class="pb-1"
-            >Current price <tooltip
+            >Current price <tooltip text="Current price of the stock"
           /></v-card-subtitle>
           <v-card-text
             ><span style="font-size: 40px">{{
@@ -82,7 +82,11 @@
           >
         </v-card>
         <v-card flat>
-          <v-card-subtitle class="pb-1">Change <tooltip /></v-card-subtitle>
+          <v-card-subtitle class="pb-1"
+            >Change
+            <tooltip
+              text="Difference between current price and closing price of the previous day"
+          /></v-card-subtitle>
           <v-card-text
             :class="{
               'red--text': stock.stock.c < stock.stock.pc,
@@ -97,7 +101,7 @@
 
         <v-card flat>
           <v-card-subtitle class="pb-1"
-            >Today's high <tooltip
+            >Today's high <tooltip text="Today's highest price of the stock"
           /></v-card-subtitle>
           <v-card-text>
             <span style="font-size: 20px">{{
@@ -107,7 +111,7 @@
         </v-card>
         <v-card flat>
           <v-card-subtitle class="pb-1"
-            >Today's low <tooltip
+            >Today's low <tooltip text="Today's lowest price of the stock"
           /></v-card-subtitle>
           <v-card-text>
             <span style="font-size: 20px">{{
@@ -116,7 +120,11 @@
           >
         </v-card>
         <v-card flat>
-          <v-card-subtitle class="pb-1">Market cap <tooltip /></v-card-subtitle>
+          <v-card-subtitle class="pb-1"
+            >Market cap
+            <tooltip
+              text="Market cap is the total value of all a company's shares of stock. It is calculated by multiplying the price of a stock by it's total number of shares. "
+          /></v-card-subtitle>
           <v-card-text>
             <span style="font-size: 20px"
               >{{ stock.profile.marketCapitalization.toFixed(2) }}mln</span
@@ -183,7 +191,9 @@
                 :items="actions"
                 :menu-props="{ bottom: true, offsetY: true }"
               ></v-select>
-              <tooltip />
+              <tooltip
+                text="Buy and sell relates to buying and selling stocks. Short and buy to cover relates to shorting stocks"
+              />
             </div>
             <!-- <div class="ml-3" style="width: 30%">
               <tooltip />
@@ -225,9 +235,6 @@
                 outlined
                 v-model.number="quantity"
               ></v-text-field>
-              <tooltip
-                text="dsakndb  dsadasd asdnsajk ndasdasd sad asd as as dasd sandjaskl ndsjlakndl"
-              />
             </div>
           </div>
           <div>

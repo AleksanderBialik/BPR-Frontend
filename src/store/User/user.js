@@ -26,7 +26,6 @@ const user = {
     async fetchUser({ commit, dispatch }) {
       try {
         const response = await axios.get(`user/settings`);
-        console.log(response.data);
         commit("SET_USER", response.data);
       } catch (error) {
         if (error.response.data.error === "info") {
@@ -51,7 +50,6 @@ const user = {
     async fetchPortfolio({ commit, dispatch }) {
       try {
         const response = await axios.get(`user/portfolio`);
-        console.log(response.data);
         commit("SET_PORTFOLIO", response.data);
       } catch (error) {
         if (error.response.data.error === "info") {
@@ -76,7 +74,6 @@ const user = {
     async fetchStatistics({ commit, dispatch }) {
       try {
         const response = await axios.get(`user/statistics`);
-        console.log(response.data);
         commit("SET_STATISTICS", response.data);
       } catch (error) {
         if (error.response.data.error === "info") {

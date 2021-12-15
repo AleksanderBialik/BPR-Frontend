@@ -29,11 +29,7 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (
-      error.response &&
-      error.response.status &&
-      error.response.status === 401
-    ) {
+    if (error.response.status === 401) {
       store.dispatch("authentication/logout");
     } else {
       return new Promise((resolve, reject) => {

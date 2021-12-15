@@ -116,6 +116,24 @@ export default new Vuetify({
           icon: "user-shield",
         },
       },
+      group: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: ["fa", "users"],
+        },
+      },
+      trophy: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "trophy",
+        },
+      },
+      medal: {
+        component: FontAwesomeIcon,
+        props: {
+          icon: "medal",
+        },
+      },
     },
   },
 });

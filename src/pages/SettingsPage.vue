@@ -2,7 +2,9 @@
   <v-row justify="center" style="max-width: 1400px; margin: auto"
     ><v-col cols="7">
       <v-card class="shadow" style="border-radius: 4px">
-        <v-card><v-card-title>Account settings</v-card-title></v-card>
+        <v-card class="d-flex justify-center"
+          ><v-card-title>Account settings</v-card-title></v-card
+        >
         <v-card class="d-flex align-stretch" width="100%"
           ><v-card width="100%"
             ><v-card-title>Details</v-card-title>
@@ -141,8 +143,12 @@ export default {
         oldPassword: this.oldPassword,
         newPassword: this.newPassword,
       };
-      this.$store.dispatch("user/changePassword", object).then((response) => {
-        console.log(response);
+      this.$store.dispatch("user/changePassword", object).then(() => {
+        this.oldPassword = "";
+        this.newPassword = "";
+        this.repeatPassword = "";
+        this.changePasswordModal = false;
+        this.$refs.logObs.reset();
       });
     },
     deleteAccount() {

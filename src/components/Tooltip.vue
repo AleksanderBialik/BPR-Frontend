@@ -1,14 +1,14 @@
 <template>
   <v-tooltip
-    :color="color ? color : ''"
     max-width="200px"
-    right
+    :right="!bottom"
+    :bottom="bottom"
     offset-overflow
     open-on-hover
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-        style="z-index: 99999"
+        style="z-index: 2"
         :absolute="absolute"
         color="success"
         x-small
@@ -20,7 +20,7 @@
         <v-icon :x-small="!medium" :small="medium">$question</v-icon>
       </v-btn>
     </template>
-    {{ text }}
+    <span v-html="text"></span>
   </v-tooltip>
 </template>
 
@@ -35,10 +35,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    stl: {
-      type: String,
-      default: "",
-    },
     color: {
       type: String,
       default: "",
@@ -48,6 +44,10 @@ export default {
       default: false,
     },
     absolute: {
+      type: Boolean,
+      default: false,
+    },
+    bottom: {
       type: Boolean,
       default: false,
     },
