@@ -33,7 +33,6 @@ export default {
       type: [Object, String],
       default: "",
     },
-    // must be included in props
     value: {
       type: null,
     },
@@ -54,17 +53,6 @@ export default {
     innerValue: "",
   }),
   watch: {
-    // Handles internal model changes.
-    innerValue() {
-      // if (
-      //   this.type === "number" &&
-      //   this.innerValue.toString().match(/^[0-9]+,[0-9]+$/)
-      // ) {
-      //   this.innerValue = this.innerValue.toString().replace(",", ".");
-      // }
-      // this.$emit("input", newVal);
-    },
-    // Handles external model changes.
     value(newVal) {
       this.innerValue = newVal;
     },

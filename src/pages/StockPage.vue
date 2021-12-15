@@ -8,7 +8,6 @@
       background-color: white;
       border-radius: 4px;
     "
-    :justify="isEmpty() ? 'center' : ''"
   >
     <v-col cols="6" v-if="isEmpty()"
       ><v-card class="justify-center d-flex" flat
@@ -195,36 +194,6 @@
                 text="Buy and sell relates to buying and selling stocks. Short and buy to cover relates to shorting stocks"
               />
             </div>
-            <!-- <div class="ml-3" style="width: 30%">
-              <tooltip />
-              <v-select
-                item-color="green"
-                dense
-                outlined
-                label="Order Type"
-                item-value="value"
-                color="black"
-                item-text="name"
-                v-model="orderType"
-                :items="orderTypes"
-                :menu-props="{ bottom: true, offsetY: true }"
-              ></v-select>
-            </div>
-            <div
-              v-if="orderType != 'market' && orderType != null"
-              class="ml-3"
-              style="width: 20%"
-            >
-              <tooltip />
-              <v-text-field
-                type="number"
-                label="Price"
-                color="black"
-                dense
-                outlined
-                v-model.number="price"
-              ></v-text-field>
-            </div> -->
             <div class="ml-6 d-flex flex-row align-center" style="width: 30%">
               <v-text-field
                 hide-details
@@ -235,6 +204,9 @@
                 outlined
                 v-model.number="quantity"
               ></v-text-field>
+              <v-btn @click="setMax()" x-small class="ml-2" color="blue"
+                >Max</v-btn
+              >
             </div>
           </div>
           <div>
@@ -242,15 +214,29 @@
               ><v-btn
                 color="success"
                 @click="placeOrder()"
-                :disabled="selectedAction === null || quantity === null"
+                :disabled="
+                  selectedAction === null ||
+                  quantity === null ||
+                  quantity * stock.stock.c > stock.credits
+                "
                 >Trade</v-btn
               >
               <v-btn @click="clear()">Clear</v-btn>
               <v-card-text
                 ><span style="font-size: 17px">Total: </span>
-                <span style="font-weight: bold">{{
-                  quantity ? formatCurrency(quantity * stock.stock.c) : "0"
-                }}</span></v-card-text
+                <span
+                  v-if="quantity * stock.stock.c < stock.credits"
+                  style="font-weight: bold"
+                  >{{
+                    quantity ? formatCurrency(quantity * stock.stock.c) : "0"
+                  }}</span
+                >
+                <span
+                  v-if="quantity * stock.stock.c > stock.credits"
+                  style="font-weight: bold"
+                >
+                  {{ message }}</span
+                ></v-card-text
               ></v-card-actions
             >
           </div>
@@ -301,6 +287,7 @@ export default {
       orderType: null,
       quantity: null,
       price: null,
+      message: "",
     };
   },
   updated() {
@@ -309,15 +296,23 @@ export default {
   },
   watch: {
     quantity() {
+      console.log(this.getMax());
       if (this.quantity === "") {
         this.quantity = null;
       }
       if (this.quantity < 0) {
         this.quantity = this.quantity * -1;
       }
-      // if (this.quantity === 0) {
-      //   this.quantity = "";
-      // }
+      if (this.quantity > this.getMax()) {
+        if (this.message === "") {
+          this.message = this.getRandomMessage();
+        }
+      }
+      if (this.quantity <= this.getMax()) {
+        if (this.message != "") {
+          this.message = this.getRandomMessage();
+        }
+      }
     },
     $route() {
       this.$store.dispatch(
@@ -396,6 +391,23 @@ export default {
         minimumFractionDigits: 0,
       });
       return formatter.format(value);
+    },
+    getMax() {
+      return Math.trunc((this.stock.credits / this.stock.stock.c).toFixed(2));
+    },
+    setMax() {
+      this.quantity = this.getMax();
+    },
+    getRandomMessage() {
+      const random = Math.floor(Math.random() * 5);
+      const messages = [
+        "Having fun?",
+        "Alright, go lower",
+        "Pls stop",
+        "Sorry, you're too poor",
+        "Go buy something cheaper",
+      ];
+      return messages[random];
     },
   },
   destroyed() {

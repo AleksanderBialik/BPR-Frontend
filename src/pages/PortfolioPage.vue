@@ -87,9 +87,6 @@
           <v-tab-item
             ><v-card
               ><v-data-table :headers="longHeaders" :items="portfolio.holdLong">
-                <template v-slot:[`item.d`]="{ item }">
-                  <span>{{ formatDate(item.d) }}</span>
-                </template>
                 <template v-slot:[`item.g`]="{ item }">
                   <div>
                     <div
@@ -133,9 +130,6 @@
                 :headers="shortHeaders"
                 :items="portfolio.holdShort"
               >
-                <template v-slot:[`item.d`]="{ item }">
-                  <span>{{ formatDate(item.d) }}</span>
-                </template>
                 <template v-slot:[`item.g`]="{ item }">
                   <div>
                     <div
@@ -209,11 +203,6 @@
         ></v-card
       ></v-col
     >
-    <!-- <v-col md="6" cols="12"
-      ><v-card class="shadow"
-        ><v-card-title>Pending Trades</v-card-title> <v-divider></v-divider
-        ><v-data-table></v-data-table></v-card
-    ></v-col> -->
   </v-row>
 </template>
 <script>
@@ -232,7 +221,6 @@ export default {
       tab: "",
       longHeaders: [
         { text: "Stock", value: "s" },
-        { text: "Transaction date", value: "d" },
         { text: "Amount", value: "am" },
         { text: "Buying price", value: "p" },
         { text: "Current price", value: "c" },
@@ -241,7 +229,6 @@ export default {
       ],
       shortHeaders: [
         { text: "Stock", value: "s" },
-        { text: "Transaction date", value: "d" },
         { text: "Amount", value: "am" },
         { text: "Buying price", value: "p" },
         { text: "Current price", value: "c" },

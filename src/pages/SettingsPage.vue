@@ -105,12 +105,6 @@
         </v-card>
       </v-dialog>
     </v-col>
-    <!-- <v-col cols="3">
-      <v-card class="d-flex align-center flex-column"
-        ><v-card-title>Delete account</v-card-title
-        ><v-card-actions><v-btn>Delete account</v-btn></v-card-actions></v-card
-      ></v-col
-    > -->
   </v-row>
 </template>
 

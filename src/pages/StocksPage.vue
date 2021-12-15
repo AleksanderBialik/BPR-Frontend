@@ -7,22 +7,6 @@
         >
         <v-divider></v-divider>
         <v-card-actions>
-          <!-- <v-autocomplete
-            item-color="green"
-            color="black"
-            v-model="stockSearch"
-            :items="stocks"
-            item-text="displaySymbol"
-            :search-input.sync="search"
-            prepend-icon="$search"
-            :filter="filterObject"
-          >
-            <template v-slot:item="{ item }">
-              <span class="font-weight-bold">{{ item.displaySymbol }}</span
-              >&nbsp;&nbsp;
-              {{ item.description }}
-            </template></v-autocomplete
-          > -->
           <v-text-field
             v-model="search"
             prepend-icon="$search"
