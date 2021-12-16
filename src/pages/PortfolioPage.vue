@@ -34,8 +34,9 @@
         <v-card flat class="d-flex justify-start">
           <v-card flat>
             <v-card-subtitle class="pb-1"
-              >Cash
-              <tooltip text="Total amount of cash that is available for trades"
+              >Credits
+              <tooltip
+                text="Total amount of credits that are available for trades"
             /></v-card-subtitle>
             <v-card-text
               ><span style="font-size: 30px; color: black"

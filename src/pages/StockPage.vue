@@ -171,7 +171,7 @@
     </v-col>
     <v-col v-if="trade && !isEmpty()">
       <v-card-title class="pl-0 pb-0"
-        >Cash: {{ formatCurrency(stock.credits) }}</v-card-title
+        >Credits: {{ formatCurrency(stock.credits) }}</v-card-title
       >
       <v-card flat class="d-flex justify-start align-end"
         ><div style="width: 100%">
@@ -204,9 +204,9 @@
                 outlined
                 v-model.number="quantity"
               ></v-text-field>
-              <v-btn @click="setMax()" x-small class="ml-2" color="blue"
+              <!-- <v-btn @click="setMax()" x-small class="ml-2" color="blue"
                 >Max</v-btn
-              >
+              > -->
             </div>
           </div>
           <div>
@@ -214,29 +214,15 @@
               ><v-btn
                 color="success"
                 @click="placeOrder()"
-                :disabled="
-                  selectedAction === null ||
-                  quantity === null ||
-                  quantity * stock.stock.c > stock.credits
-                "
+                :disabled="selectedAction === null || quantity === null"
                 >Trade</v-btn
               >
               <v-btn @click="clear()">Clear</v-btn>
               <v-card-text
                 ><span style="font-size: 17px">Total: </span>
-                <span
-                  v-if="quantity * stock.stock.c < stock.credits"
-                  style="font-weight: bold"
-                  >{{
-                    quantity ? formatCurrency(quantity * stock.stock.c) : "0"
-                  }}</span
-                >
-                <span
-                  v-if="quantity * stock.stock.c > stock.credits"
-                  style="font-weight: bold"
-                >
-                  {{ message }}</span
-                ></v-card-text
+                <span style="font-weight: bold">{{
+                  quantity ? formatCurrency(quantity * stock.stock.c) : "0"
+                }}</span></v-card-text
               ></v-card-actions
             >
           </div>
@@ -296,22 +282,11 @@ export default {
   },
   watch: {
     quantity() {
-      console.log(this.getMax());
       if (this.quantity === "") {
         this.quantity = null;
       }
       if (this.quantity < 0) {
         this.quantity = this.quantity * -1;
-      }
-      if (this.quantity > this.getMax()) {
-        if (this.message === "") {
-          this.message = this.getRandomMessage();
-        }
-      }
-      if (this.quantity <= this.getMax()) {
-        if (this.message != "") {
-          this.message = this.getRandomMessage();
-        }
       }
     },
     $route() {
