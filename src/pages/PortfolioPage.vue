@@ -4,7 +4,6 @@
       <v-card class="shadow">
         <div class="d-flex justify-start align-center headerColor">
           <v-card-title class="font-weight-bold">Statistics</v-card-title>
-
           <v-card-actions>
             <v-select
               item-color="green"
@@ -42,6 +41,19 @@
               ><span style="font-size: 30px; color: black"
                 >{{ formatCurrency(portfolio.credits) }}
               </span>
+            </v-card-text></v-card
+          >
+          <v-card flat>
+            <v-card-subtitle class="pb-1"
+              >Buying power
+              <tooltip
+                text="Buying power is total amount of your cash and margin accounts that can be used to make trades. Calculated as cash - (Shorted stocks * 150%)"
+              />
+            </v-card-subtitle>
+            <v-card-text
+              ><span style="font-size: 30px; color: black">{{
+                formatCurrency(portfolio.buyingPower)
+              }}</span>
             </v-card-text></v-card
           >
           <v-card flat>
@@ -261,6 +273,7 @@ export default {
       ],
       statisticsType: "",
       tradeType: "bought",
+      count: 0,
     };
   },
   computed: {
@@ -276,11 +289,7 @@ export default {
       this.statisticsType = "value";
     }
   },
-  watch: {
-    statistics() {
-      this.count += 1;
-    },
-  },
+  watch: {},
   methods: {
     formatDate(date) {
       return moment(date).format("MMMM Do YYYY, HH:mm:ss");

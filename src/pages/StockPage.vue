@@ -173,6 +173,9 @@
       <v-card-title class="pl-0 pb-0"
         >Credits: {{ formatCurrency(stock.credits) }}</v-card-title
       >
+      <v-card-title class="pl-0 pb-0"
+        >Buying power: {{ formatCurrency(stock.buyingPower) }}</v-card-title
+      >
       <v-card flat class="d-flex justify-start align-end"
         ><div style="width: 100%">
           <div style="width: 50%" class="d-flex justify-space-around pt-3">
