@@ -40,15 +40,6 @@ export default {
       if (this.statistics.name === "Amount of owned stocks") {
         this.options = {
           maintainAspectRatio: false,
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  stepSize: this.calculateStepSize(),
-                },
-              },
-            ],
-          },
         };
       } else {
         this.options = {
@@ -57,7 +48,6 @@ export default {
             yAxes: [
               {
                 ticks: {
-                  stepSize: this.calculateStepSize(),
                   callback: function (value) {
                     var formatter = new Intl.NumberFormat("en-US", {
                       style: "currency",
