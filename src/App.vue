@@ -169,11 +169,18 @@
               <span style="font-size: 17px" class="mr-2 font-weight-bold">
                 {{ data.s }}
               </span>
-              <span style="font-size: 14px" class="mr-1">{{
+              <span v-if="data.c != 0" style="font-size: 14px" class="mr-1">{{
                 data.c.toFixed(2)
               }}</span>
-              <span style="font-size: 13px d-flex justify-center"
+              <span
+                v-if="data.c != 0"
+                style="font-size: 13px d-flex justify-center"
                 >({{ data.p.toFixed(2) }}%)</span
+              >
+              <span
+                v-if="data.c === 0"
+                style="font-size: 13px d-flex justify-center"
+                >(Closed)</span
               >
             </v-chip>
           </div>
